@@ -366,7 +366,7 @@ GO
 CREATE TABLE Tramite
 (
     id_tramite          INT           IDENTITY(1,1) NOT NULL,
-    numero_expediente   VARCHAR(30)   NOT NULL,
+    numero_expediente   NVARCHAR(30)   NOT NULL,
     fecha_radicacion    DATETIME      NOT NULL DEFAULT (GETDATE()),
     fecha_resolucion_estimada DATETIME NULL,
     fecha_resolucion_final    DATETIME NULL,
@@ -388,7 +388,7 @@ CREATE TABLE Historial_Tramite
 (
     id_historial        INT           IDENTITY(1,1) NOT NULL,
     fecha_cambio        DATETIME      NOT NULL DEFAULT (GETDATE()),
-    observaciones       VARCHAR(255)  NULL,
+    observaciones       NVARCHAR(255)  NULL,
     id_tramite          INT           NOT NULL,
     id_estado_tramite   INT           NOT NULL,
     CONSTRAINT PK_Historial_Tramite       PRIMARY KEY (id_historial),
@@ -401,8 +401,8 @@ GO
 CREATE TABLE Archivo_Adjunto
 (
     id_archivo_adjunto  INT           IDENTITY(1,1) NOT NULL,
-    nombre_original     VARCHAR(255)  NOT NULL,
-    ruta_almacenamiento VARCHAR(255)  NOT NULL,
+    nombre_original     NVARCHAR(255)  NOT NULL,
+    ruta_almacenamiento NVARCHAR(255)  NOT NULL,
     peso_bytes          FLOAT         NOT NULL,
     fecha_subida        DATETIME      NOT NULL DEFAULT (GETDATE()),
     id_tramite          INT           NOT NULL,
@@ -422,7 +422,7 @@ GO
 CREATE TABLE Deudas_Municipales
 (
     id_deuda_municipal  INT           IDENTITY(1,1) NOT NULL,
-    periodo_deuda       VARCHAR(150)  NOT NULL,
+    periodo_deuda       NVARCHAR(150)  NOT NULL,
     monto_principal     FLOAT         NOT NULL,
     monto_intereses     FLOAT         NOT NULL DEFAULT (0),
     monto_multas        FLOAT         NOT NULL DEFAULT (0),
@@ -444,13 +444,13 @@ GO
 CREATE TABLE Factura
 (
     id_factura          INT           IDENTITY(1,1) NOT NULL,
-    clave_numerica_hacienda VARCHAR(50) NOT NULL,
+    clave_numerica_hacienda NVARCHAR(50) NOT NULL,
     fecha_emision       DATETIME      NOT NULL DEFAULT (GETDATE()),
     subtotal            FLOAT         NOT NULL,
     descuentos          FLOAT         NOT NULL DEFAULT (0),
     total_a_pagar       FLOAT         NOT NULL,
     saldo_pendiente     FLOAT         NOT NULL,
-    estado_factura      VARCHAR(20)   NOT NULL DEFAULT ('Pendiente'),
+    estado_factura      NVARCHAR(20)   NOT NULL DEFAULT ('Pendiente'),
     id_deuda_municipal  INT           NOT NULL,
     CONSTRAINT PK_Factura                 PRIMARY KEY (id_factura),
     CONSTRAINT UQ_Factura_clave           UNIQUE (clave_numerica_hacienda),
@@ -469,7 +469,7 @@ CREATE TABLE Pago_Municipal
     id_pago_municipal   INT           IDENTITY(1,1) NOT NULL,
     monto_total_pagado  FLOAT         NOT NULL,
     fecha_pago          DATETIME      NOT NULL DEFAULT (GETDATE()),
-    comprobante         VARCHAR(50)   NOT NULL,
+    comprobante         NVARCHAR(50)   NOT NULL,
     id_medio_pago       INT           NOT NULL,
     id_contribuyente    INT           NOT NULL,
     CONSTRAINT PK_Pago_Municipal          PRIMARY KEY (id_pago_municipal),
@@ -506,11 +506,11 @@ GO
 CREATE TABLE Logs_Acciones_Auditoria
 (
     id_auditoria        INT           IDENTITY(1,1) NOT NULL,
-    tabla_afectada      VARCHAR(50)   NOT NULL,
-    id_registro_afectado VARCHAR(50)  NOT NULL,
-    valores_anteriores  VARCHAR(MAX)  NULL,
-    valores_nuevos      VARCHAR(MAX)  NULL,
-    direccion_ip        VARCHAR(45)   NOT NULL,
+    tabla_afectada      NVARCHAR(50)   NOT NULL,
+    id_registro_afectado NVARCHAR(50)  NOT NULL,
+    valores_anteriores  NVARCHAR(255)  NULL,
+    valores_nuevos      NVARCHAR(255)  NULL,
+    direccion_ip        NVARCHAR(45)   NOT NULL,
     fecha_hora          DATETIME      NOT NULL DEFAULT (GETDATE()),
     id_usuario          INT           NULL,
     id_tipo_accion      INT           NOT NULL,
@@ -525,9 +525,9 @@ CREATE TABLE Logs_eventos_Auditoria
 (
     id_log_sistema      INT           IDENTITY(1,1) NOT NULL,
     id_usuario_log      INT           NULL,
-    tipo_evento_sistema VARCHAR(50)   NOT NULL,
-    detalle_evento      VARCHAR(255)  NULL,
-    ip_origen           VARCHAR(45)   NOT NULL,
+    tipo_evento_sistema NVARCHAR(50)   NOT NULL,
+    detalle_evento      NVARCHAR(255)  NULL,
+    ip_origen           NVARCHAR(45)   NOT NULL,
     fecha_evento        DATETIME      NOT NULL DEFAULT (GETDATE()),
     CONSTRAINT PK_Logs_eventos_Auditoria  PRIMARY KEY (id_log_sistema),
     CONSTRAINT FK_Logs_Usuario            FOREIGN KEY (id_usuario_log) REFERENCES Usuario(id_usuario)
@@ -538,13 +538,13 @@ GO
 CREATE TABLE Respaldos_Config
 (
     id_respaldos_config INT           IDENTITY(1,1) NOT NULL,
-    nombre_configuracion VARCHAR(255) NOT NULL,
+    nombre_configuracion NVARCHAR(255) NOT NULL,
     hora_ejecucion      TIME          NOT NULL,
-    origen              VARCHAR(255)  NOT NULL,
+    origen              NVARCHAR(255)  NOT NULL,
     retencion_dias      INT           NOT NULL,
     fecha_modificacion  DATETIME      NULL,
-    cifrado             VARCHAR(200)  NULL,
-    ruta_destino        VARCHAR(255)  NOT NULL,
+    cifrado             NVARCHAR(200)  NULL,
+    ruta_destino        NVARCHAR(150)  NOT NULL,
     activo              BIT           NOT NULL DEFAULT (1),
     fecha_creacion      DATETIME      NOT NULL DEFAULT (GETDATE()),
     id_frecuencia       INT           NOT NULL,
@@ -562,8 +562,8 @@ CREATE TABLE Respaldos
     id_respaldos        INT           IDENTITY(1,1) NOT NULL,
     fecha_inicio        DATETIME      NOT NULL DEFAULT (GETDATE()),
     fecha_fin           DATETIME      NULL,
-    detalles_error      VARCHAR(255)  NULL,
-    ruta_archivo        VARCHAR(255)  NOT NULL,
+    detalles_error      NVARCHAR(255)  NULL,
+    ruta_archivo        NVARCHAR(255)  NOT NULL,
     tamano_bytes        BIGINT        NOT NULL DEFAULT (0),
     id_respaldo_config  INT           NOT NULL,
     id_estados_respaldos INT          NOT NULL,
@@ -579,8 +579,8 @@ CREATE TABLE Restauracion
     id_restauracion     INT           IDENTITY(1,1) NOT NULL,
     fecha_inicio_restauracion DATETIME NOT NULL DEFAULT (GETDATE()),
     fecha_fin_restauracion   DATETIME NULL,
-    destino             VARCHAR(100)  NOT NULL,
-    motivo              VARCHAR(255)  NOT NULL,
+    destino             NVARCHAR(100)  NOT NULL,
+    motivo              NVARCHAR(255)  NOT NULL,
     id_estados_respaldos INT          NOT NULL,
     id_usuario          INT           NOT NULL,
     CONSTRAINT PK_Restauracion            PRIMARY KEY (id_restauracion),
