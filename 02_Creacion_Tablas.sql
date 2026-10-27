@@ -14,8 +14,8 @@ GO
 CREATE TABLE Departamento
 (
     id_departamento     INT           IDENTITY(1,1) NOT NULL,
-    nombre_departamento VARCHAR(50)   NOT NULL,
-    codigo_interno      VARCHAR(10)   NOT NULL,
+    nombre_departamento NVARCHAR(50)   NOT NULL,
+    codigo_interno      NVARCHAR(10)   NOT NULL,
     CONSTRAINT PK_Departamento            PRIMARY KEY (id_departamento),
     CONSTRAINT UQ_Departamento_codigo     UNIQUE (codigo_interno),
     CONSTRAINT UQ_Departamento_nombre     UNIQUE (nombre_departamento)
@@ -26,8 +26,8 @@ GO
 CREATE TABLE Distrito
 (
     id_distrito         INT           IDENTITY(1,1) NOT NULL,
-    codigo_distrital    VARCHAR(10)   NOT NULL,
-    nombre_distrito     VARCHAR(50)   NOT NULL,
+    codigo_distrital    NVARCHAR(10)   NOT NULL,
+    nombre_distrito     NVARCHAR(50)   NOT NULL,
     CONSTRAINT PK_Distrito                PRIMARY KEY (id_distrito),
     CONSTRAINT UQ_Distrito_codigo         UNIQUE (codigo_distrital),
     CONSTRAINT UQ_Distrito_nombre         UNIQUE (nombre_distrito)
@@ -38,8 +38,8 @@ GO
 CREATE TABLE Tipo_Uso_Inmueble
 (
     id_tipo_uso_inmueble INT          IDENTITY(1,1) NOT NULL,
-    codigo_uso          VARCHAR(10)   NOT NULL,
-    descripcion         VARCHAR(100)  NOT NULL,
+    codigo_uso          NVARCHAR(10)   NOT NULL,
+    descripcion         NVARCHAR(100)  NOT NULL,
     CONSTRAINT PK_Tipo_Uso_Inmueble       PRIMARY KEY (id_tipo_uso_inmueble),
     CONSTRAINT UQ_Tipo_Uso_codigo         UNIQUE (codigo_uso)
 ) ON FG_Inmuebles;
@@ -49,8 +49,8 @@ GO
 CREATE TABLE Estado_Tramite
 (
     id_estado           INT           IDENTITY(1,1) NOT NULL,
-    codigo              VARCHAR(20)   NOT NULL,
-    nombre_estado       VARCHAR(50)   NOT NULL,
+    codigo              NVARCHAR(20)   NOT NULL,
+    nombre_estado       NVARCHAR(50)   NOT NULL,
     CONSTRAINT PK_Estado_Tramite          PRIMARY KEY (id_estado),
     CONSTRAINT UQ_Estado_Tramite_codigo   UNIQUE (codigo),
     CONSTRAINT UQ_Estado_Tramite_nombre   UNIQUE (nombre_estado)
@@ -61,8 +61,8 @@ GO
 CREATE TABLE Requisito
 (
     id_requisito        INT           IDENTITY(1,1) NOT NULL,
-    nombre_requisito    VARCHAR(255)  NOT NULL,
-    descripcion         VARCHAR(500)  NOT NULL,
+    nombre_requisito    NVARCHAR(255)  NOT NULL,
+    descripcion         NVARCHAR(500)  NOT NULL,
     es_obligatorio      BIT           NOT NULL DEFAULT (1),
     CONSTRAINT PK_Requisito               PRIMARY KEY (id_requisito)
 ) ON FG_Tramites;
@@ -72,12 +72,12 @@ GO
 CREATE TABLE Tipo_Tributo
 (
     id_tipo_tributo     INT           IDENTITY(1,1) NOT NULL,
-    codigo_tributo      VARCHAR(20)   NOT NULL,
-    nombre_tributo      VARCHAR(100)  NOT NULL,
-    base_calculo        VARCHAR(150)  NOT NULL,
+    codigo_tributo      NVARCHAR(20)   NOT NULL,
+    nombre_tributo      NVARCHAR(100)  NOT NULL,
+    base_calculo        NVARCHAR(150)  NOT NULL,
     tarifa              FLOAT         NULL,
     monto_fijo          FLOAT         NULL,
-    periodicidad        VARCHAR(20)   NOT NULL,
+    periodicidad        NVARCHAR(20)   NOT NULL,
     CONSTRAINT PK_Tipo_Tributo            PRIMARY KEY (id_tipo_tributo),
     CONSTRAINT UQ_Tipo_Tributo_codigo     UNIQUE (codigo_tributo),
     CONSTRAINT CK_Tipo_Tributo_periodicidad CHECK (periodicidad IN ('Mensual', 'Trimestral', 'Semestral', 'Anual', 'Ocasional'))
@@ -88,8 +88,8 @@ GO
 CREATE TABLE Estado_Deuda
 (
     id_estado_deuda     INT           IDENTITY(1,1) NOT NULL,
-    codigo_estado_deuda VARCHAR(20)   NOT NULL,
-    descripcion_estado_deuda VARCHAR(255) NOT NULL,
+    codigo_estado_deuda NVARCHAR(20)   NOT NULL,
+    descripcion_estado_deuda NVARCHAR(255) NOT NULL,
     CONSTRAINT PK_Estado_Deuda            PRIMARY KEY (id_estado_deuda),
     CONSTRAINT UQ_Estado_Deuda_codigo     UNIQUE (codigo_estado_deuda)
 ) ON FG_Tributos;
@@ -99,7 +99,7 @@ GO
 CREATE TABLE Medio_Pago
 (
     id_medio_pago       INT           IDENTITY(1,1) NOT NULL,
-    nombre_medio_pago   VARCHAR(50)   NOT NULL,
+    nombre_medio_pago   NVARCHAR(50)   NOT NULL,
     CONSTRAINT PK_Medio_Pago              PRIMARY KEY (id_medio_pago),
     CONSTRAINT UQ_Medio_Pago_nombre       UNIQUE (nombre_medio_pago)
 ) ON FG_Tributos;
@@ -109,7 +109,7 @@ GO
 CREATE TABLE Rol
 (
     id_rol              INT           IDENTITY(1,1) NOT NULL,
-    nombre_rol          VARCHAR(50)   NOT NULL,
+    nombre_rol          NVARCHAR(50)   NOT NULL,
     CONSTRAINT PK_Rol                     PRIMARY KEY (id_rol),
     CONSTRAINT UQ_Rol_nombre              UNIQUE (nombre_rol)
 ) ON FG_Seguridad;
@@ -119,8 +119,8 @@ GO
 CREATE TABLE Permiso
 (
     id_permiso          INT           IDENTITY(1,1) NOT NULL,
-    modulo              VARCHAR(50)   NOT NULL,
-    accion              VARCHAR(20)   NOT NULL,
+    modulo              NVARCHAR(50)   NOT NULL,
+    accion              NVARCHAR(20)   NOT NULL,
     CONSTRAINT PK_Permiso                 PRIMARY KEY (id_permiso),
     CONSTRAINT UQ_Permiso_modulo_accion   UNIQUE (modulo, accion)
 ) ON FG_Seguridad;
@@ -130,7 +130,7 @@ GO
 CREATE TABLE Tipo_Accion_Auditoria
 (
     id_tipo_accion      INT           IDENTITY(1,1) NOT NULL,
-    codigo              VARCHAR(20)   NOT NULL,
+    codigo              NVARCHAR(20)   NOT NULL,
     CONSTRAINT PK_Tipo_Accion_Auditoria   PRIMARY KEY (id_tipo_accion),
     CONSTRAINT UQ_Tipo_Accion_codigo      UNIQUE (codigo)
 ) ON FG_Auditoria_DBA;
@@ -140,7 +140,7 @@ GO
 CREATE TABLE Estados_Respaldos
 (
     id_estados_respaldos INT          IDENTITY(1,1) NOT NULL,
-    nombre_estados      VARCHAR(100)  NOT NULL,
+    nombre_estados      NVARCHAR(100)  NOT NULL,
     CONSTRAINT PK_Estados_Respaldos       PRIMARY KEY (id_estados_respaldos),
     CONSTRAINT UQ_Estados_Respaldos_nombre UNIQUE (nombre_estados)
 ) ON FG_Auditoria_DBA;
@@ -150,8 +150,8 @@ GO
 CREATE TABLE Tipo_de_respaldo
 (
     id_tipo_de_respaldo INT           IDENTITY(1,1) NOT NULL,
-    nombre_tipo_respaldo VARCHAR(100) NOT NULL,
-    descripcion         VARCHAR(255)  NOT NULL,
+    nombre_tipo_respaldo NVARCHAR(100) NOT NULL,
+    descripcion         NVARCHAR(255)  NOT NULL,
     CONSTRAINT PK_Tipo_de_respaldo        PRIMARY KEY (id_tipo_de_respaldo),
     CONSTRAINT UQ_Tipo_de_respaldo_nombre UNIQUE (nombre_tipo_respaldo)
 ) ON FG_Auditoria_DBA;
@@ -161,9 +161,9 @@ GO
 CREATE TABLE Frecuencia
 (
     id_frecuencia       INT           IDENTITY(1,1) NOT NULL,
-    nombre_frecuencia   VARCHAR(100)  NOT NULL,
+    nombre_frecuencia   NVARCHAR(100)  NOT NULL,
     intervalo_horas     INT           NOT NULL,
-    descripcion_frecuencia VARCHAR(255) NOT NULL,
+    descripcion_frecuencia NVARCHAR(255) NOT NULL,
     CONSTRAINT PK_Frecuencia              PRIMARY KEY (id_frecuencia),
     CONSTRAINT UQ_Frecuencia_nombre       UNIQUE (nombre_frecuencia),
     CONSTRAINT CK_Frecuencia_intervalo    CHECK (intervalo_horas > 0)
@@ -178,12 +178,12 @@ GO
 CREATE TABLE Usuario
 (
     id_usuario          INT           IDENTITY(1,1) NOT NULL,
-    user_name           VARCHAR(50)   NOT NULL,
-    password_hash       VARCHAR(255)  NOT NULL,
-    nombre_usuario      VARCHAR(50)   NOT NULL,
-    apellido1_usuario   VARCHAR(50)   NOT NULL,
-    apellido2_usuario   VARCHAR(50)   NOT NULL,
-    email_usuario       VARCHAR(100)  NOT NULL,
+    user_name           NVARCHAR(50)   NOT NULL,
+    password_hash       NVARCHAR(255)  NOT NULL,
+    nombre_usuario      NVARCHAR(50)   NOT NULL,
+    apellido1_usuario   NVARCHAR(50)   NOT NULL,
+    apellido2_usuario   NVARCHAR(50)   NOT NULL,
+    email_usuario       NVARCHAR(100)  NOT NULL,
     activo              BIT           NOT NULL DEFAULT (1),
     id_departamento     INT           NOT NULL,
     CONSTRAINT PK_Usuario                 PRIMARY KEY (id_usuario),
@@ -197,9 +197,9 @@ GO
 CREATE TABLE Contribuyente
 (
     id_contribuyente    INT           IDENTITY(1,1) NOT NULL,
-    correo_electronico  VARCHAR(100)  NOT NULL,
-    telefono            VARCHAR(20)   NOT NULL,
-    direccion_notificaciones VARCHAR(255) NOT NULL,
+    correo_electronico  NVARCHAR(100)  NOT NULL,
+    telefono            NVARCHAR(20)   NOT NULL,
+    direccion_notificaciones NVARCHAR(255) NOT NULL,
     fecha_registro      DATETIME      NOT NULL DEFAULT (GETDATE()),
     estado_contribuyente BIT          NOT NULL DEFAULT (1),
     CONSTRAINT PK_Contribuyente           PRIMARY KEY (id_contribuyente)
@@ -210,8 +210,8 @@ GO
 CREATE TABLE Tipo_Tramite
 (
     id_tipo_tramite     INT           IDENTITY(1,1) NOT NULL,
-    nombre_tramite      VARCHAR(100)  NOT NULL,
-    descripcion_tipo    VARCHAR(255)  NOT NULL,
+    nombre_tramite      NVARCHAR(100)  NOT NULL,
+    descripcion_tipo    NVARCHAR(255)  NOT NULL,
     dias_resolucion_max INT           NOT NULL,
     id_departamento     INT           NOT NULL,
     CONSTRAINT PK_Tipo_Tramite            PRIMARY KEY (id_tipo_tramite),
@@ -229,10 +229,10 @@ GO
 CREATE TABLE Contribuyente_Fisico
 (
     id_contribuyente_fisico INT       IDENTITY(1,1) NOT NULL,
-    cedula_identidad    VARCHAR(20)   NOT NULL,
-    nombre              VARCHAR(50)   NOT NULL,
-    apellido1_fisico    VARCHAR(50)   NOT NULL,
-    apellido2_fisico    VARCHAR(50)   NOT NULL,
+    cedula_identidad    NVARCHAR(20)   NOT NULL,
+    nombre              NVARCHAR(50)   NOT NULL,
+    apellido1_fisico    NVARCHAR(50)   NOT NULL,
+    apellido2_fisico    NVARCHAR(50)   NOT NULL,
     fecha_nacimiento    DATETIME      NOT NULL,
     id_contribuyente    INT           NOT NULL,
     CONSTRAINT PK_Contribuyente_Fisico    PRIMARY KEY (id_contribuyente_fisico),
@@ -246,9 +246,9 @@ GO
 CREATE TABLE Contribuyente_Juridico
 (
     id_contribuyente_juridico INT    IDENTITY(1,1) NOT NULL,
-    cedula_juridica     VARCHAR(20)   NOT NULL,
-    razon_social        VARCHAR(255)  NOT NULL,
-    nombre_fantasia     VARCHAR(150)  NULL,
+    cedula_juridica     NVARCHAR(20)   NOT NULL,
+    razon_social        NVARCHAR(255)  NOT NULL,
+    nombre_fantasia     NVARCHAR(150)  NULL,
     fecha_constitucion  DATETIME      NOT NULL,
     id_contribuyente    INT           NOT NULL,
     CONSTRAINT PK_Contribuyente_Juridico  PRIMARY KEY (id_contribuyente_juridico),
@@ -262,11 +262,11 @@ GO
 CREATE TABLE Representante_Legal
 (
     id_representante_legal INT        IDENTITY(1,1) NOT NULL,
-    nombre_representante VARCHAR(50)  NOT NULL,
-    apellido1_representante VARCHAR(50) NOT NULL,
-    apellido2_representante VARCHAR(50) NOT NULL,
-    tomo_folio_registro VARCHAR(30)   NOT NULL,
-    cedula_representante VARCHAR(20)  NOT NULL,
+    nombre_representante NVARCHAR(50)  NOT NULL,
+    apellido1_representante NVARCHAR(50) NOT NULL,
+    apellido2_representante NVARCHAR(50) NOT NULL,
+    tomo_folio_registro NVARCHAR(30)   NOT NULL,
+    cedula_representante NVARCHAR(20)  NOT NULL,
     fecha_vencimiento_poder DATETIME  NOT NULL,
     id_contribuyente_juridico INT     NOT NULL,
     CONSTRAINT PK_Representante_Legal     PRIMARY KEY (id_representante_legal),
@@ -312,12 +312,12 @@ GO
 CREATE TABLE Bien_Inmueble
 (
     id_inmueble         INT           IDENTITY(1,1) NOT NULL,
-    numero_finca        VARCHAR(30)   NOT NULL,
-    direccion_exacta    VARCHAR(255)  NOT NULL,
+    numero_finca        NVARCHAR(30)   NOT NULL,
+    direccion_exacta    NVARCHAR(255)  NOT NULL,
     area_terreno_m2     FLOAT         NOT NULL,
     area_construccion_m2 FLOAT        NOT NULL,
     valor_fiscal        FLOAT         NOT NULL,
-    plano_catastrado    VARCHAR(30)   NOT NULL,
+    plano_catastrado    NVARCHAR(30)   NOT NULL,
     id_tipo_uso_inmueble INT          NOT NULL,
     id_distrito         INT           NOT NULL,
     CONSTRAINT PK_Bien_Inmueble           PRIMARY KEY (id_inmueble),
